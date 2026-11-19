@@ -1,0 +1,12 @@
+services:
+  chrony:
+    build: .
+    pull_policy: build
+    container_name: chrony
+    restart: always
+    ports:
+      - 123:123/udp
+    environment:
+      - LOG_LEVEL=0
+      - TZ=Europe/Berlin
+    #  - CHRONY_CONFIG_FILE="/etc/chrony.conf"
