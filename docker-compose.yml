@@ -4,6 +4,8 @@ services:
     pull_policy: build
     container_name: chrony
     restart: always
+    cap_add:
+      - NET_BIND_SERVICE
     ports:
       - 123:123/udp
     volumes:
