@@ -9,4 +9,7 @@ COPY ./startup.sh /opt/startup.sh
 # ntp standard port
 EXPOSE 123/udp
 
+# check if it works
+HEALTHCHECK CMD chronyc -n tracking || exit 1
+
 ENTRYPOINT [ "/bin/sh", "/opt/startup.sh" ]
