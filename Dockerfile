@@ -1,7 +1,9 @@
 FROM alpine:latest
 
-# install timezone data and chrony
-RUN apk add --no-cache tzdata chrony
+# upgrade and install timezone data and chrony
+RUN apk upgrade && \
+    apk add bash tzdata chrony && \
+    apk cache clean
 
 # copy entrypoint script
 COPY ./startup.sh /opt/startup.sh
