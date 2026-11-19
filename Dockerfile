@@ -2,7 +2,7 @@ FROM alpine:latest
 
 # upgrade and install timezone data and chrony
 RUN apk upgrade && \
-    apk add bash tzdata chrony && \
+    apk add bash tzdata chrony-nts && \
     apk cache clean
 
 # copy entrypoint script
