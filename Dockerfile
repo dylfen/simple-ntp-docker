@@ -14,9 +14,9 @@ COPY ./chrony-network-stats.conf /opt/chrony-network-stats.conf
 COPY ./cron-stats /etc/periodic/15min/cron-stats
 
 # set scrips to execuable
-CMD chmod +x /opt/startup.sh
-CMD chmod +x /opt/chrony-network-stats.sh
-CMD chmod +x /etc/periodic/15min/cron-stats
+RUN chmod +x /opt/startup.sh
+RUN chmod +x /opt/chrony-network-stats.sh
+RUN chmod +x /etc/periodic/15min/cron-stats
 
 # nginx standard port
 EXPOSE 80/tcp
