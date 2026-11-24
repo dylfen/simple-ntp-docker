@@ -887,7 +887,7 @@ main() {
     validate_numeric "$GRAPH_REGEN_YEAR" "GRAPH_REGEN_YEAR"
     validate_numeric "$GRAPH_REGEN_NETWORK" "GRAPH_REGEN_NETWORK"
     configure_display_preset
-  #  check_commands
+    check_commands
     setup_directories
     generate_vnstat_images
     collect_chrony_data
