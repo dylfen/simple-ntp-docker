@@ -9,7 +9,6 @@ RUN apk upgrade && \
 COPY ./startup.sh /opt/startup.sh
 # copy stats script
 COPY ./chrony-network-stats.sh /opt/chrony-network-stats.sh
-COPY ./chrony-network-stats.conf /opt/chrony-network-stats.conf
 # copy cron job script to "run every 15 min" folder
 COPY ./cron-stats /etc/periodic/15min/cron-stats
 
@@ -19,7 +18,7 @@ RUN chmod +x /opt/chrony-network-stats.sh
 RUN chmod +x /etc/periodic/15min/cron-stats
 
 # nginx standard port
-EXPOSE 80/tcp
+EXPOSE 80
 # ntp standard port
 EXPOSE 123/udp
 
