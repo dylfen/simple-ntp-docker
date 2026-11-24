@@ -7,7 +7,11 @@ RUN apk upgrade && \
 
 # copy entrypoint script
 COPY ./startup.sh /opt/startup.sh
+COPY ./chrony-network-stats.sh /opt/chrony-network-stats.sh
+COPY ./chrony-network-stats.conf /opt/chrony-network-stats.conf
 
+# nginx standard port
+EXPOSE 80/tcp
 # ntp standard port
 EXPOSE 123/udp
 
