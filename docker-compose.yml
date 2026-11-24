@@ -11,6 +11,7 @@ services:
       - 123:123/udp
     volumes:
       - ./chrony.conf:/etc/chrony.conf:ro
+      - ./chrony-network-stats.conf:/opt/chrony-network-stats.conf:ro
     environment:
       - LOG_LEVEL=0
       - TZ=Europe/Berlin
