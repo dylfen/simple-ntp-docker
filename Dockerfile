@@ -1,21 +1,29 @@
 FROM alpine:latest
 
-# upgrade and install timezone data and chrony
-RUN apk upgrade && \
-    apk add bash tzdata chrony-nts nginx vnstat rrdtool && \
-    apk cache clean
+# install software
+RUN apk upgrade \
+    && apk add bash curl nginx tzdata chrony-nts vnstat rrdtool \
+    && apk cache clean 
+RUN mkdir /www \
+    && echo '*/10 * * * * bash /opt/chrony-network-stats.sh' >> /var/spool/cron/crontabs/root 
 
 # copy entrypoint script
 COPY ./startup.sh /opt/startup.sh
 # copy stats script
 COPY ./chrony-network-stats.sh /opt/chrony-network-stats.sh
-# copy cron job script to "run every 15 min" folder
-COPY ./cron-stats /etc/periodic/15min/cron-stats
+COPY ./chrony-network-stats.conf /opt/chrony-network-stats.conf
+# copy nginx site config
+COPY ./chrony-nginx-stats.conf /etc/nginx/http.d/default.conf
+COPY ./index.html /www/index.html
+RUN chown -R nginx:www-data /www 
+
 
 # set scrips to execuable
-RUN chmod +x /opt/startup.sh
-RUN chmod +x /opt/chrony-network-stats.sh
-RUN chmod +x /etc/periodic/15min/cron-stats
+RUN chmod +x /opt/startup.sh && \
+    chmod +x /opt/chrony-network-stats.sh
+
+VOLUME /var/lib/chrony-rrd
+VOLUME /var/lib/vnstat
 
 # nginx standard port
 EXPOSE 80
@@ -26,4 +34,4 @@ EXPOSE 123/udp
 HEALTHCHECK CMD chronyc -n tracking || exit 1
 
 # tell docker to run this at start
-ENTRYPOINT [ "/bin/sh", "/opt/startup.sh" ]
+ENTRYPOINT [ "/bin/bash", "/opt/startup.sh" ]
