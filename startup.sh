@@ -1,5 +1,8 @@
-#!/bin/sh
-
+#!/bin/bash
+vnstat --dbiflist 1 >/dev/null 2>&1 ||  { vnstatd --initdb; vnstat --add -i eth0; }
+nohup vnstatd -d
+nohup nginx
+nohup sleep 5 && crond -l 0 -L /var/log/crond.log
 CHRONY_CONFIG_FILE="/etc/chrony.conf"
 
 # CHRONY_LOG_LEVEL environment variable. if empty, set to default 0
