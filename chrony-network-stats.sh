@@ -1,12 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -euo pipefail
 
 VERSION="1.1.0"
 
 ###### Config file ######
-#SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-#CONFIG_FILE="${SCRIPT_DIR}/chrony-network-stats.conf"
-CONFIG_FILE="/opt/chrony-network-stats.conf"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+CONFIG_FILE="${CONFIG_FILE:-$SCRIPT_DIR/chrony-network-stats.conf}"
 
 
 ####################### Built-in defaults ######################
@@ -92,9 +91,8 @@ validate_numeric() {
 }
 
 check_commands() {
-    local commands=("rrdtool" "chronyc" "sudo" "timeout")
-
-    if [[ "${ENABLE_NETWORK_STATS}" == "yes" ]]; then
+    local commands=("rrdtool" "chronyc" "timeout")
+    if [[ "$ENABLE_NETWORK_STATS" == "yes" ]]; then
         commands+=("vnstati")
     fi
 
@@ -153,13 +151,13 @@ collect_chrony_data() {
     fi
 
     get_html() {
-        timeout "$TIMEOUT_SECONDS"s sudo chronyc $CHRONYC_OPTS "$1" -v 2>&1 | sed 's/&/\&amp;/g;s/</\&lt;/g;s/>/\&gt;/g' || {
+        chronyc $CHRONYC_OPTS "$1" -v 2>&1 | sed 's/&/\&amp;/g;s/</\&lt;/g;s/>/\&gt;/g' || {
             log_message "ERROR" "Failed to collect chronyc $1 data"
             return 1
         }
     }
 
-    RAW_TRACKING=$(timeout "$TIMEOUT_SECONDS"s sudo chronyc $CHRONYC_OPTS tracking) || {
+    RAW_TRACKING=$(chronyc $CHRONYC_OPTS tracking) || {
         log_message "ERROR" "Failed to collect chronyc tracking data"
         exit 1
     }
@@ -203,7 +201,7 @@ extract_chronyc_values() {
         CHRONYC_OPTS="-n"
     fi
 
-    RAW_STATS=$(LC_ALL=C sudo chronyc $CHRONYC_OPTS serverstats) || {
+    RAW_STATS=$(LC_ALL=C chronyc $CHRONYC_OPTS serverstats) || {
         log_message "ERROR" "Failed to collect chronyc serverstats"
         exit 1
     }
