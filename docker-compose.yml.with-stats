@@ -1,7 +1,7 @@
 services:
   chrony:
-    build: .
-    pull_policy: build
+    build: 
+      dockerfile: Dockerfile.with-stats
     container_name: chrony
     restart: always
     cap_add:
