@@ -9,6 +9,8 @@ RUN mkdir /www \
 
 # copy entrypoint script
 COPY ./src/startup.sh /opt/startup.sh
+# copy chrony config
+COPY ./config/chrony.conf:/etc/chrony.conf:ro
 # copy stats script
 COPY ./src/chrony-network-stats.sh /opt/chrony-network-stats.sh
 COPY ./config/chrony-network-stats.conf /opt/chrony-network-stats.conf
