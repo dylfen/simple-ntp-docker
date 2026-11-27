@@ -1,3 +1,5 @@
+# From https://github.com/TheHuman00/chrony-stats 
+
 #!/bin/bash
 set -euo pipefail
 
