@@ -8,13 +8,13 @@ RUN mkdir /www \
     && echo '*/10 * * * * bash /opt/chrony-network-stats.sh' >> /var/spool/cron/crontabs/root 
 
 # copy entrypoint script
-COPY ./startup.sh /opt/startup.sh
+COPY ./src/startup.sh /opt/startup.sh
 # copy stats script
-COPY ./chrony-network-stats.sh /opt/chrony-network-stats.sh
-COPY ./chrony-network-stats.conf /opt/chrony-network-stats.conf
+COPY ./src/chrony-network-stats.sh /opt/chrony-network-stats.sh
+COPY ./config/chrony-network-stats.conf /opt/chrony-network-stats.conf
 # copy nginx site config
-COPY ./chrony-nginx-stats.conf /etc/nginx/http.d/default.conf
-COPY ./index.html /www/index.html
+COPY ./config/chrony-nginx-stats.conf /etc/nginx/http.d/default.conf
+COPY ./src/index.html /www/index.html
 RUN chown -R nginx:www-data /www 
 
 
