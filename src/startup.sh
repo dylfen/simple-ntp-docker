@@ -1,4 +1,12 @@
-#!/bin/sh
+#!/bin/bash
+
+# if nginx is installed, start nginx, vnstat and cron
+if [ -f /usr/sbin/nginx ]; then
+  vnstat --dbiflist 1 >/dev/null 2>&1 ||  { vnstatd --initdb; vnstat --add -i eth0; }
+  nohup vnstatd -d
+  nohup nginx
+  nohup sleep 5 && crond -l 0 -L /var/log/crond.log
+fi
 
 CHRONY_CONFIG_FILE="/etc/chrony.conf"
 
@@ -19,3 +27,4 @@ fi
 
 # startup chronyd 
 exec /usr/sbin/chronyd -x -d -u chrony -L ${CHRONY_LOG_LEVEL} -f ${CHRONY_CONFIG_FILE}
+

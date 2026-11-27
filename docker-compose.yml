@@ -1,16 +1,17 @@
 services:
   chrony:
-    build: .
-    pull_policy: build
+    build: 
+      dockerfile: Dockerfile
     container_name: chrony
     restart: always
     cap_add:
       - NET_BIND_SERVICE
     ports:
+      - 80:80
       - 123:123/udp
-    volumes:
-      - ./chrony.conf:/etc/chrony.conf:ro
     environment:
       - LOG_LEVEL=0
       - TZ=Europe/Berlin
-    # - CHRONY_CONFIG_FILE="/etc/chrony.conf"
+volumes:
+  data-rrd:
+  data-vnstat:

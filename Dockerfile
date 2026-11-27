@@ -1,12 +1,17 @@
 FROM alpine:latest
 
-# upgrade and install timezone data and chrony
-RUN apk upgrade && \
-    apk add bash tzdata chrony-nts && \
-    apk cache clean
+# install software
+RUN apk upgrade \
+    && apk add bash tzdata chrony-nts \
+    && apk cache clean  
 
 # copy entrypoint script
-COPY ./startup.sh /opt/startup.sh
+COPY ./src/startup.sh /opt/startup.sh
+# copy chrony config
+COPY ./config/chrony.conf /etc/chrony.conf
+
+# set scrips to execuable
+RUN chmod +x /opt/startup.sh 
 
 # ntp standard port
 EXPOSE 123/udp
@@ -14,4 +19,5 @@ EXPOSE 123/udp
 # check if it works
 HEALTHCHECK CMD chronyc -n tracking || exit 1
 
-ENTRYPOINT [ "/bin/sh", "/opt/startup.sh" ]
+# tell docker to run this at start
+ENTRYPOINT [ "/bin/bash", "/opt/startup.sh" ]

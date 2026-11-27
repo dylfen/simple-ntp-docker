@@ -1,0 +1,20 @@
+services:
+  chrony:
+    build: 
+      dockerfile: Dockerfile.with-stats
+    container_name: chrony
+    restart: always
+    cap_add:
+      - NET_BIND_SERVICE
+    ports:
+      - 80:80
+      - 123:123/udp
+    volumes:
+      - data-rrd:/var/lib/chrony-rrd
+      - data-vnstat:/var/lib/vnstat
+    environment:
+      - LOG_LEVEL=0
+      - TZ=Europe/Berlin
+volumes:
+  data-rrd:
+  data-vnstat:
