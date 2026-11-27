@@ -15,7 +15,7 @@ COPY ./config/chrony.conf /etc/chrony.conf
 COPY ./src/chrony-network-stats.sh /opt/chrony-network-stats.sh
 COPY ./config/chrony-network-stats.conf /opt/chrony-network-stats.conf
 # copy nginx site config
-COPY ./config/chrony-nginx-stats.conf /etc/nginx/http.d/default.conf
+COPY ./src/chrony-nginx-stats.conf /etc/nginx/http.d/default.conf
 COPY ./src/index.html /www/index.html
 RUN chown -R nginx:www-data /www 
 
