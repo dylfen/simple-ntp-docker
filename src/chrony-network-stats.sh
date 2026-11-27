@@ -1,9 +1,9 @@
-# From https://github.com/TheHuman00/chrony-stats 
-
 #!/bin/bash
+# From https://github.com/TheHuman00/chrony-stats with minor edits
+
 set -euo pipefail
 
-VERSION="1.1.0"
+VERSION="1.1.1"
 
 ###### Config file ######
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
