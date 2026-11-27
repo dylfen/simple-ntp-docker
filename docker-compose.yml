@@ -10,8 +10,6 @@ services:
       - 80:80
       - 123:123/udp
     volumes:
-      - ./chrony.conf:/etc/chrony.conf:ro
-      - ./chrony-network-stats.conf:/opt/chrony-network-stats.conf:ro
       - data-rrd:/var/lib/chrony-rrd
       - data-vnstat:/var/lib/vnstat
     environment:
