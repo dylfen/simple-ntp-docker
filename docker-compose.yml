@@ -12,7 +12,11 @@ services:
     volumes:
       - ./chrony.conf:/etc/chrony.conf:ro
       - ./chrony-network-stats.conf:/opt/chrony-network-stats.conf:ro
+      - data-rrd:/var/lib/chrony-rrd
+      - data-vnstat:/var/lib/vnstat
     environment:
       - LOG_LEVEL=0
       - TZ=Europe/Berlin
-    # - CHRONY_CONFIG_FILE="/etc/chrony.conf"
+volumes:
+  data-rrd:
+  data-vnstat:
