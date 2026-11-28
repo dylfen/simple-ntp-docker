@@ -1,6 +1,4 @@
 #!/bin/bash
-# From https://github.com/TheHuman00/chrony-stats with minor edits
-
 set -euo pipefail
 
 VERSION="1.1.1"
@@ -789,7 +787,10 @@ EOF
     cat >>"$OUTPUT_DIR/$HTML_FILENAME" <<EOF
 
             <section id="chrony-stats">
-                <h2>Chrony - NTP Statistics</h2>
+                <h2>Chrony - NTP Statistics <a target="_blank" href="https://chrony-project.org/doc/latest/chronyc.html#:~:text=System%20clock-,tracking,-The%20tracking%20command">[Data Legend]</a></h2>
+
+                <h3>Command: <code>chronyc${CHRONYC_DISPLAY_OPTS} tracking</code></h3>
+                <pre><code>${CHRONYC_TRACKING_HTML}</code></pre>
 
                 <h3>Command: <code>chronyc${CHRONYC_DISPLAY_OPTS} sources -v</code></h3>
                 <pre><code>${CHRONYC_SOURCES}</code></pre>
@@ -799,9 +800,6 @@ EOF
 
                 <h3>Command: <code>chronyc${CHRONYC_DISPLAY_OPTS} sourcestats -v</code></h3>
                 <pre><code>${CHRONYC_SOURCESTATS}</code></pre>
-
-                <h3>Command: <code>chronyc${CHRONYC_DISPLAY_OPTS} tracking</code></h3>
-                <pre><code>${CHRONYC_TRACKING_HTML}</code></pre>
             </section>
         </main>
 
