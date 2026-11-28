@@ -4,6 +4,8 @@
 if [ -f /usr/sbin/nginx ]; then
   vnstat --dbiflist 1 >/dev/null 2>&1 ||  { vnstatd --initdb; vnstat --add -i eth0; }
   nohup vnstatd -d
+  nohup cp -f /www/index.wait /www/index.html
+  nohup chown -R nginx:www-data /www 
   nohup nginx
   nohup sleep 5 && crond -l 0 -L /var/log/crond.log
 fi
@@ -27,4 +29,3 @@ fi
 
 # startup chronyd 
 exec /usr/sbin/chronyd -x -d -u chrony -L ${CHRONY_LOG_LEVEL} -f ${CHRONY_CONFIG_FILE}
-
