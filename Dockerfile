@@ -1,9 +1,9 @@
 FROM alpine:latest
 
 # install software
-RUN apk upgrade \
-    && apk add bash tzdata chrony-nts \
-    && apk cache clean  
+RUN apk upgrade && \
+    apk add bash tzdata chrony-nts && \
+    apk cache clean  
 
 # copy entrypoint script
 COPY ./src/startup.sh /opt/startup.sh
