@@ -7,7 +7,7 @@ if [ -f /usr/sbin/nginx ]; then
   nohup cp -f /www/index.wait /www/index.html
   nohup chown -R nginx:www-data /www 
   nohup nginx
-  nohup sleep 5 && crond -l 0 -L /var/log/crond.log
+  nohup crond -l 0 -L /var/log/crond.log
 fi
 
 CHRONY_CONFIG_FILE="/etc/chrony.conf"
