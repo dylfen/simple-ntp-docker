@@ -1,23 +1,23 @@
 FROM alpine:latest
 
 # install software
-RUN apk upgrade \
-    && apk add bash curl nginx tzdata chrony-nts vnstat rrdtool \
-    && apk cache clean 
-RUN mkdir /www \
-    && echo '*/10 * * * * bash /opt/chrony-network-stats.sh' >> /var/spool/cron/crontabs/root 
+RUN apk upgrade  && \
+    apk add bash curl nginx tzdata chrony-nts vnstat rrdtool && \
+    apk cache clean 
+RUN mkdir /www && \
+    echo '*/10 * * * * bash /opt/chrony-network-stats.sh' >> /var/spool/cron/crontabs/root 
 
 # copy entrypoint script
-COPY ./src/startup.sh /opt/startup.sh
-# copy chrony config
-COPY ./config/chrony.conf /etc/chrony.conf
+COPY ./startup.sh /opt/startup.sh
 # copy stats script
-COPY ./src/chrony-network-stats.sh /opt/chrony-network-stats.sh
-COPY ./config/chrony-network-stats.conf /opt/chrony-network-stats.conf
+COPY ./chrony-network-stats.sh /opt/chrony-network-stats.sh
+COPY ./chrony-network-stats.conf /opt/chrony-network-stats.conf
 # copy nginx site config
-COPY ./src/chrony-nginx-stats.conf /etc/nginx/http.d/default.conf
-COPY ./src/index.html /www/index.html
-RUN chown -R nginx:www-data /www 
+COPY ./chrony-nginx-stats.conf /etc/nginx/http.d/default.conf
+COPY ./index.html /www/index.wait
+RUN cp -f /www/index.wait /www/index.html && \
+    chown -R nginx:www-data /www 
+
 
 # set scrips to execuable
 RUN chmod +x /opt/startup.sh && \
