@@ -769,8 +769,8 @@ EOF
                         <tr>
                             <td valign="top" style="padding: 0 10px;">
                                 <img src="img/vnstat_s.png" alt="vnStat summary"><br>
-                                <img src="img/vnstat_d.png" alt="vnStat daily" style="margin-top: 4px;"><br>
                                 <img src="img/vnstat_t.png" alt="vnStat top 10" style="margin-top: 4px;"><br>
+                                <img src="img/vnstat_d.png" alt="vnStat daily" style="margin-top: 4px;"><br>
                             </td>
                             <td valign="top" style="padding: 0 10px;">
                                 <img src="img/vnstat_h.png" alt="vnStat hourly"><br>
