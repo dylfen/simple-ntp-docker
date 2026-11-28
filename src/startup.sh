@@ -4,6 +4,7 @@
 if [ -f /usr/sbin/nginx ]; then
   vnstat --dbiflist 1 >/dev/null 2>&1 ||  { vnstatd --initdb; vnstat --add -i eth0; }
   nohup vnstatd -d
+  nohup rm -f /var/lib/chrony-rrd/.last_graph_network
   nohup cp -f /www/index.wait /www/index.html
   nohup chown -R nginx:www-data /www 
   nohup nginx
